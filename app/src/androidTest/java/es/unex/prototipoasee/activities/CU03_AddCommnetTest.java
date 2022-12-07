@@ -1,35 +1,35 @@
 package es.unex.prototipoasee.activities;
 
 
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.filters.LargeTest;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
-import static androidx.test.espresso.Espresso.onData;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
-import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-
-import es.unex.prototipoasee.R;
-import es.unex.prototipoasee.model.Films;
-import es.unex.prototipoasee.model.GenresList;
-import es.unex.prototipoasee.room.FilmsDatabase;
-import es.unex.prototipoasee.support.AppExecutors;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -40,19 +40,18 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runner.manipulation.Ordering;
-
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.unex.prototipoasee.R;
+import es.unex.prototipoasee.model.Films;
+import es.unex.prototipoasee.room.FilmsDatabase;
+import es.unex.prototipoasee.support.AppExecutors;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CU02_AddFavoritesTest extends Application {
-
+public class CU03_AddCommnetTest extends Application {
     public Films films;
     public Context c = ApplicationProvider.getApplicationContext();
 
@@ -77,6 +76,7 @@ public class CU02_AddFavoritesTest extends Application {
                 db.filmDAO().insertFilm(films);
                 for(Integer genre: genresids){
                     db.filmsGenresListDAO().insertFilmGenre(films.getId(), genre);
+                    db.filmsGenresListDAO().deleteFilmGenre(films.getId());
                 }
             }
         });
@@ -89,15 +89,14 @@ public class CU02_AddFavoritesTest extends Application {
             public void run() {
                 FilmsDatabase db = FilmsDatabase.getInstance(c);
                 db.filmDAO().deleteFilm(films);
-                db.filmsGenresListDAO().deleteFilmGenre(films.getId());
             }
         });
     }
 
     @Test
-    public void cU02_AddFavoritesTest() {
-        String title = films.getTitle();
-
+    public void cU03_AddCommnetTest() {
+        String user = "Usuario";
+        String comment = "Muy rico";
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
                         childAtPosition(
@@ -114,7 +113,7 @@ public class CU02_AddFavoritesTest extends Application {
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 6)));
-        appCompatEditText.perform(scrollTo(), replaceText("Usuario"), closeSoftKeyboard());
+        appCompatEditText.perform(scrollTo(), replaceText(user), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.etEmailRegister),
@@ -152,12 +151,6 @@ public class CU02_AddFavoritesTest extends Application {
                                 7)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.tvMovieTitle), withText(title),
-                        withParent(withParent(withId(R.id.fragment_explore))),
-                        isDisplayed()));
-        textView.check(matches(withText(title)));
-
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.fragment_explore),
                         childAtPosition(
@@ -165,49 +158,98 @@ public class CU02_AddFavoritesTest extends Application {
                                 0)));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.tvMovieTitleDetail), withText(title),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView2.check(matches(withText(title)));
-
-        ViewInteraction button = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("AÑADIR A FAVORITOS"),
-                        withParent(allOf(withId(R.id.linearLayout2),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
-
-        ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("Añadir a Favoritos"),
+        ViewInteraction tabView = onView(
+                allOf(withContentDescription("Social"),
                         childAtPosition(
-                                allOf(withId(R.id.linearLayout2),
+                                childAtPosition(
+                                        withId(R.id.tlDetail),
+                                        0),
+                                1),
+                        isDisplayed()));
+        tabView.perform(click());
+
+        ViewInteraction imageButton = onView(
+                allOf(withId(R.id.ibSendComment), withContentDescription("Escribe tu comentario aquí"),
+                        withParent(allOf(withId(R.id.constraintLayout),
+                                withParent(withId(R.id.detail_social)))),
+                        isDisplayed()));
+        imageButton.check(matches(isDisplayed()));
+
+        ViewInteraction appCompatEditText6 = onView(
+                allOf(withId(R.id.etCommentSocial),
+                        childAtPosition(
+                                allOf(withId(R.id.constraintLayout),
                                         childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                13)),
+                                                withId(R.id.detail_social),
+                                                1)),
                                 0),
                         isDisplayed()));
-        materialButton2.perform(click());
+        appCompatEditText6.perform(replaceText(comment), closeSoftKeyboard());
+
+        ViewInteraction editText2 = onView(
+                allOf(withId(R.id.etCommentSocial),
+                        withParent(allOf(withId(R.id.constraintLayout),
+                                withParent(withId(R.id.detail_social)))),
+                        isDisplayed()));
+        editText2.check(matches(withText(comment)));
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.ibSendComment), withContentDescription("Escribe tu comentario aquí"),
+                        childAtPosition(
+                                allOf(withId(R.id.constraintLayout),
+                                        childAtPosition(
+                                                withId(R.id.detail_social),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.tvUsernameComment),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        textView.check(matches(withText(user)));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.tvCommentText),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        textView2.check(matches(withText(comment)));
+
+        pressBack();
+
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.fragment_explore),
+                        childAtPosition(
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                0)));
+        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+
+        ViewInteraction tabView2 = onView(
+                allOf(withContentDescription("Social"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.tlDetail),
+                                        0),
+                                1),
+                        isDisplayed()));
+        tabView2.perform(click());
+
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.tvUsernameComment),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        textView3.check(matches(withText(user)));
+
+        ViewInteraction textView4 = onView(
+                allOf(withId(R.id.tvCommentText),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        textView4.check(matches(withText(comment)));
 
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0),
-                                1),
-                        isDisplayed()));
-        bottomNavigationItemView.perform(click());
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.tvMovieTitle), withText(title),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
-                        isDisplayed()));
-        textView3.check(matches(withText(title)));
-
-        ViewInteraction bottomNavigationItemView2 = onView(
                 allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
                         childAtPosition(
                                 childAtPosition(
@@ -215,26 +257,25 @@ public class CU02_AddFavoritesTest extends Application {
                                         0),
                                 3),
                         isDisplayed()));
-        bottomNavigationItemView2.perform(click());
+        bottomNavigationItemView.perform(click());
 
-        ViewInteraction materialButton3 = onView(
+        ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 8)));
-        materialButton3.perform(scrollTo(), click());
+        materialButton2.perform(scrollTo(), click());
 
-        ViewInteraction materialButton4 = onView(
+        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 4)));
-        materialButton4.perform(scrollTo(), click());
-
+        materialButton3.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(
