@@ -39,8 +39,6 @@ import es.unex.prototipoasee.R;
 @RunWith(AndroidJUnit4.class)
 public class CU05_UserInfoTest {
 
-
-
     @Rule
     public ActivityScenarioRule<LoginActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(LoginActivity.class);
