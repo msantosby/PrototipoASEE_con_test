@@ -5,12 +5,10 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.swipeLeft;
-import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -51,7 +49,7 @@ import es.unex.prototipoasee.support.AppExecutors;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CU09_NavigationTabsTest {
+public class CU11_SearchingTest {
 
     public Films films;
     public Context c = ApplicationProvider.getApplicationContext();
@@ -95,9 +93,11 @@ public class CU09_NavigationTabsTest {
     }
 
     @Test
-    public void navigationTabsTest() {
+    public void cU11_SearchingTest() {
+        String title = films.getTitle();
+
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Sing up"),
+                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -142,7 +142,7 @@ public class CU09_NavigationTabsTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Sing up"),
+                allOf(withId(R.id.bRegister), withText("Registrarse"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -150,75 +150,104 @@ public class CU09_NavigationTabsTest {
                                 7)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.fragment_explore),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction textView2 = onView(
+        ViewInteraction textView = onView(
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Detail")));
+        textView.check(matches(withText("Explorar")));
+
+        ViewInteraction searchView = onView(
+                allOf(withId(R.id.svSearchFilm),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                        isDisplayed()));
+        searchView.check(matches(isDisplayed()));
+
+        ViewInteraction imageButton = onView(
+                allOf(withId(R.id.ibResetFilms),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                        isDisplayed()));
+        imageButton.check(matches(isDisplayed()));
+
+        ViewInteraction viewGroup = onView(
+                allOf(withId(R.id.cgGenreFilter),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.appcompat.widget.LinearLayoutCompat.class))),
+                        isDisplayed()));
+        viewGroup.check(matches(isDisplayed()));
+
+        ViewInteraction searchAutoComplete = onView(
+                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        searchAutoComplete.perform(replaceText(title), closeSoftKeyboard());
+
+        ViewInteraction searchAutoComplete2 = onView(
+                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")), withText(title),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        searchAutoComplete2.perform(pressImeActionButton(), closeSoftKeyboard());
+
+        ViewInteraction editText = onView(
+                allOf(IsInstanceOf.<View>instanceOf(android.widget.EditText.class), withText(title),
+                        withParent(allOf(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                        isDisplayed()));
+        editText.check(matches(withText(title)));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.tvMovieTitle), withText(title),
+                        withParent(withParent(withId(R.id.fragment_explore))),
+                        isDisplayed()));
+        textView2.check(matches(withText(title)));
+
+        ViewInteraction appCompatImageView = onView(
+                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageView")), withContentDescription("Borrar consulta"),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        appCompatImageView.perform(click());
+
+        ViewInteraction chip = onView(
+                allOf(withText("Acción"),
+                        childAtPosition(
+                                allOf(withId(R.id.cgGenreFilter),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.HorizontalScrollView")),
+                                                0)),
+                                0)));
+        chip.perform(scrollTo(), click());
 
         ViewInteraction textView3 = onView(
-                allOf(withParent(allOf(withContentDescription("Info"),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                allOf(withId(R.id.tvMovieTitle), withText(title),
+                        withParent(withParent(withId(R.id.fragment_explore))),
                         isDisplayed()));
-        textView3.check(matches(withText("INFO")));
+        textView3.check(matches(withText(title)));
 
-        ViewInteraction textView4 = onView(
-                allOf(withParent(allOf(withContentDescription("Social"),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-                        isDisplayed()));
-        textView4.check(matches(withText("SOCIAL")));
-
-        ViewInteraction viewPager = onView(
-                allOf(withId(R.id.vpDetail),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        viewPager.check(matches(isDisplayed()));
-
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Social"),
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.ibResetFilms),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.tlDetail),
+                                        withClassName(is("android.widget.LinearLayout")),
                                         0),
                                 1),
                         isDisplayed()));
-        tabView.perform(click());
-
-        ViewInteraction viewGroup = onView(
-                allOf(withId(R.id.detail_social),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.recyclerview.widget.RecyclerView.class))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
-        ViewInteraction tabView2 = onView(
-                allOf(withContentDescription("Info"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tlDetail),
-                                        0),
-                                0),
-                        isDisplayed()));
-        tabView2.perform(click());
-
-        viewPager.check(matches(isDisplayed()));
-        viewPager.perform(swipeLeft());
-
-        viewGroup.check(matches(isDisplayed()));
-        viewGroup.perform(swipeRight());
-
-        viewPager.check(matches(isDisplayed()));
-
-        pressBack();
+        appCompatImageButton.perform(click(), closeSoftKeyboard());
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Profile"),
+                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -228,7 +257,7 @@ public class CU09_NavigationTabsTest {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Delete account"),
+                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -237,7 +266,7 @@ public class CU09_NavigationTabsTest {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Delete permanently"),
+                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
