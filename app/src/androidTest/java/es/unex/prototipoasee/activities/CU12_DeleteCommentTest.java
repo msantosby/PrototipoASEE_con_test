@@ -5,10 +5,11 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -49,7 +50,7 @@ import es.unex.prototipoasee.support.AppExecutors;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CU11_SearchingTest {
+public class CU12_DeleteCommentTest {
 
     public Films films;
     public Context c = ApplicationProvider.getApplicationContext();
@@ -75,10 +76,6 @@ public class CU11_SearchingTest {
                 db.filmDAO().insertFilm(films);
                 for(Integer genre: genresids){
                     db.filmsGenresListDAO().insertFilmGenre(films.getId(), genre);
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();}
                 }
             }
         });
@@ -96,9 +93,11 @@ public class CU11_SearchingTest {
         });
     }
 
+
     @Test
-    public void cU11_SearchingTest() {
-        String title = films.getTitle();
+    public void cU12_DeleteCommentTest() {
+        String user = "Usuario";
+        String comment = "Muy rico";
 
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
@@ -116,7 +115,7 @@ public class CU11_SearchingTest {
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 6)));
-        appCompatEditText.perform(scrollTo(), replaceText("Usuario"), closeSoftKeyboard());
+        appCompatEditText.perform(scrollTo(), replaceText(user), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.etEmailRegister),
@@ -154,101 +153,101 @@ public class CU11_SearchingTest {
                                 7)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction textView = onView(
-                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
-                                withParent(withId(androidx.preference.R.id.action_bar_container)))),
-                        isDisplayed()));
-        textView.check(matches(withText("Explorar")));
-
-        ViewInteraction searchView = onView(
-                allOf(withId(R.id.svSearchFilm),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
-                        isDisplayed()));
-        searchView.check(matches(isDisplayed()));
-
-        ViewInteraction imageButton = onView(
-                allOf(withId(R.id.ibResetFilms),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
-                        isDisplayed()));
-        imageButton.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup = onView(
-                allOf(withId(R.id.cgGenreFilter),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.appcompat.widget.LinearLayoutCompat.class))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
-        ViewInteraction searchAutoComplete = onView(
-                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")),
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.fragment_explore),
                         childAtPosition(
-                                allOf(withClassName(is("android.widget.LinearLayout")),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                1)),
-                                0),
-                        isDisplayed()));
-        searchAutoComplete.perform(replaceText(title), closeSoftKeyboard());
-
-        ViewInteraction searchAutoComplete2 = onView(
-                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")), withText(title),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.LinearLayout")),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                1)),
-                                0),
-                        isDisplayed()));
-        searchAutoComplete2.perform(pressImeActionButton(), closeSoftKeyboard());
-
-        ViewInteraction editText = onView(
-                allOf(IsInstanceOf.<View>instanceOf(android.widget.EditText.class), withText(title),
-                        withParent(allOf(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-                        isDisplayed()));
-        editText.check(matches(withText(title)));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.tvMovieTitle),
-                        withParent(withParent(withId(R.id.fragment_explore))),
-                        isDisplayed()));
-        textView2.check(matches(withText(title)));
-
-        ViewInteraction appCompatImageView = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageView")), withContentDescription("Borrar consulta"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.LinearLayout")),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                1)),
-                                1),
-                        isDisplayed()));
-        appCompatImageView.perform(click());
-
-        ViewInteraction chip = onView(
-                allOf(withText("Acción"),
-                        childAtPosition(
-                                allOf(withId(R.id.cgGenreFilter),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.HorizontalScrollView")),
-                                                0)),
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
-        chip.perform(scrollTo(), click());
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.tvMovieTitle), withText(title),
-                        withParent(withParent(withId(R.id.fragment_explore))),
-                        isDisplayed()));
-        textView3.check(matches(withText(title)));
-
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.ibResetFilms),
+        ViewInteraction tabView = onView(
+                allOf(withContentDescription("Social"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
+                                        withId(R.id.tlDetail),
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatImageButton.perform(click(), closeSoftKeyboard());
+        tabView.perform(click());
+
+        ViewInteraction appCompatEditText5 = onView(
+                allOf(withId(R.id.etCommentSocial),
+                        childAtPosition(
+                                allOf(withId(R.id.constraintLayout),
+                                        childAtPosition(
+                                                withId(R.id.detail_social),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        appCompatEditText5.perform(replaceText(comment), closeSoftKeyboard());
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.ibSendComment), withContentDescription("Escribe tu comentario aquí"),
+                        childAtPosition(
+                                allOf(withId(R.id.constraintLayout),
+                                        childAtPosition(
+                                                withId(R.id.detail_social),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.tvUsernameComment),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        textView.check(matches(withText(user)));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.tvCommentText),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        textView2.check(matches(withText(comment)));
+
+        ViewInteraction imageButton = onView(
+                allOf(withId(R.id.ibCommentDelete), withContentDescription("Eliminar comentario"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
+                        isDisplayed()));
+        imageButton.check(matches(isDisplayed()));
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withId(R.id.ibCommentDelete), withContentDescription("Eliminar comentario"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("com.google.android.material.card.MaterialCardView")),
+                                        0),
+                                2),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        textView.check(doesNotExist());
+        textView2.check(doesNotExist());
+        imageButton.check(doesNotExist());
+
+        pressBack();
+
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.fragment_explore),
+                        childAtPosition(
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                0)));
+        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+
+        ViewInteraction tabView2 = onView(
+                allOf(withContentDescription("Social"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.tlDetail),
+                                        0),
+                                1),
+                        isDisplayed()));
+        tabView2.perform(click());
+
+        textView.check(doesNotExist());
+        textView2.check(doesNotExist());
+        imageButton.check(doesNotExist());
+
+        pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
