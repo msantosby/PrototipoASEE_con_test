@@ -133,6 +133,12 @@ public class CU10_AppInfoTest {
                                 10)));
         appCompatImageButton.perform(scrollTo(), click());
 
+        ViewInteraction viewGroup = onView(
+                allOf(withId(androidx.preference.R.id.decor_content_parent),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                        isDisplayed()));
+        viewGroup.check(matches(isDisplayed()));
+
         ViewInteraction textView2 = onView(
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
@@ -150,34 +156,32 @@ public class CU10_AppInfoTest {
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView3.check(matches(withText(R.string.app_info_what_is)));
-        textView3.perform(swipeUp());
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.tvWhatIsResponse),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView4.check(matches(withText(R.string.app_info_what_is_response)));
-        textView4.perform(swipeUp());
 
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.tvWhatCanDo),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView5.check(matches(withText(R.string.app_info_what_can_do)));
-        textView5.perform(swipeUp());
 
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.tvWhatCanDoResponse),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView6.check(matches(withText(R.string.app_info_what_can_do_response)));
-        textView6.perform(swipeUp());
 
         ViewInteraction textView7 = onView(
                 allOf(withId(R.id.tvWho),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView7.check(matches(withText(R.string.app_info_who)));
+
+        viewGroup.perform(swipeUp());
 
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.tvWhoResponse),

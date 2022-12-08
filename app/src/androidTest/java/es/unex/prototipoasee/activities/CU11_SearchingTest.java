@@ -43,6 +43,7 @@ import java.util.List;
 
 import es.unex.prototipoasee.R;
 import es.unex.prototipoasee.model.Films;
+import es.unex.prototipoasee.model.Genre;
 import es.unex.prototipoasee.room.FilmsDatabase;
 import es.unex.prototipoasee.support.AppExecutors;
 
@@ -51,19 +52,18 @@ import es.unex.prototipoasee.support.AppExecutors;
 public class CU11_SearchingTest {
 
     public Films films;
+    public Genre genre;
     public Context c = ApplicationProvider.getApplicationContext();
 
     @Rule
     public ActivityScenarioRule<LoginActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(LoginActivity.class);
 
-
-
     @Before
     public void initTest(){
+        genre = new Genre(0, "AaPanes");
         List<Integer> genresids = new ArrayList<>();
-        genresids.add(28);
-        genresids.add(14);
+        genresids.add(0);
         films = new Films(true, "", "es", 0.0,"Tequeños para ti",false,0,0,
                 "Tequeños para ti",genresids, "","Así se hacen los buenos tequeños, de nada","2022-12-07",0.0,0,0);
 
@@ -72,8 +72,9 @@ public class CU11_SearchingTest {
             public void run() {
                 FilmsDatabase db = FilmsDatabase.getInstance(c);
                 db.filmDAO().insertFilm(films);
-                for(Integer genre: genresids){
-                    db.filmsGenresListDAO().insertFilmGenre(films.getId(), genre);
+                db.genreDAO().insertGenre(genre);
+                for(Integer genreId: genresids){
+                    db.filmsGenresListDAO().insertFilmGenre(films.getId(), genreId);
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
@@ -91,6 +92,7 @@ public class CU11_SearchingTest {
             public void run() {
                 FilmsDatabase db = FilmsDatabase.getInstance(c);
                 db.filmDAO().deleteFilm(films);
+                db.genreDAO().deleteGenre(genre);
                 db.filmsGenresListDAO().deleteFilmGenre(films.getId());
             }
         });
@@ -99,6 +101,7 @@ public class CU11_SearchingTest {
     @Test
     public void cU11_SearchingTest() {
         String title = films.getTitle();
+        String name = genre.getName();
 
         try {
             Thread.sleep(1000);
@@ -222,7 +225,7 @@ public class CU11_SearchingTest {
         imageButton.perform(click());
 
         ViewInteraction chip = onView(
-                allOf(withText("Acción"),
+                allOf(withText(name),
                         childAtPosition(
                                 allOf(withId(R.id.cgGenreFilter),
                                         childAtPosition(
