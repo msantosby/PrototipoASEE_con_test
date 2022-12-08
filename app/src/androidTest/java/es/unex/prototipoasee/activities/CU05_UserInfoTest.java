@@ -46,6 +46,7 @@ public class CU05_UserInfoTest {
     @Test
     public void cU05_UserInfoTest() {
         String user = "Usuario";
+        String email = "usuario@gmail.com";
         String password = "Usuario1";
 
         ViewInteraction materialTextView = onView(
@@ -73,7 +74,7 @@ public class CU05_UserInfoTest {
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 4)));
-        appCompatEditText2.perform(scrollTo(), replaceText("usuario@gmail.com"), closeSoftKeyboard());
+        appCompatEditText2.perform(scrollTo(), replaceText(email), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText3 = onView(
                 allOf(withId(R.id.etPasswordRegister),
@@ -110,6 +111,7 @@ public class CU05_UserInfoTest {
                                         0),
                                 3),
                         isDisplayed()));
+        bottomNavigationItemView.check(matches(isDisplayed()));
         bottomNavigationItemView.perform(click());
 
         ViewInteraction textView = onView(
@@ -158,7 +160,7 @@ public class CU05_UserInfoTest {
                 allOf(withId(R.id.tvEmailValueProfile),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView6.check(matches(withText("usuario@gmail.com")));
+        textView6.check(matches(withText(email)));
 
         ViewInteraction textView7 = onView(
                 allOf(withId(R.id.tvPasswordProfile),

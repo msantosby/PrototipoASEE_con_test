@@ -169,6 +169,12 @@ public class CU11_SearchingTest {
                         isDisplayed()));
         textView.check(matches(withText(R.string.title_explore)));
 
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.tvMovieTitle), withText(title),
+                        withParent(withParent(withId(R.id.fragment_explore))),
+                        isDisplayed()));
+        textView2.check(matches(withText(title)));
+
         ViewInteraction searchView = onView(
                 allOf(withId(R.id.svSearchFilm),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
@@ -186,6 +192,16 @@ public class CU11_SearchingTest {
                         withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.appcompat.widget.LinearLayoutCompat.class))),
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
+
+        ViewInteraction chip = onView(
+                allOf(withText(name),
+                        childAtPosition(
+                                allOf(withId(R.id.cgGenreFilter),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.HorizontalScrollView")),
+                                                0)),
+                                0)));
+        chip.check(matches(isDisplayed()));
 
         ViewInteraction searchAutoComplete = onView(
                 allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")),
@@ -216,15 +232,15 @@ public class CU11_SearchingTest {
                         isDisplayed()));
         editText.check(matches(withText(title)));
 
-        ViewInteraction textView2 = onView(
+        ViewInteraction textView3 = onView(
                 allOf(withId(R.id.tvMovieTitle),
                         withParent(withParent(withId(R.id.fragment_explore))),
                         isDisplayed()));
-        textView2.check(matches(withText(title)));
+        textView3.check(matches(withText(title)));
 
         imageButton.perform(click());
 
-        ViewInteraction chip = onView(
+        ViewInteraction chip2 = onView(
                 allOf(withText(name),
                         childAtPosition(
                                 allOf(withId(R.id.cgGenreFilter),
@@ -232,13 +248,13 @@ public class CU11_SearchingTest {
                                                 withClassName(is("android.widget.HorizontalScrollView")),
                                                 0)),
                                 0)));
-        chip.perform(scrollTo(), click());
+        chip2.perform(scrollTo(), click());
 
-        ViewInteraction textView3 = onView(
+        ViewInteraction textView4 = onView(
                 allOf(withId(R.id.tvMovieTitle), withText(title),
                         withParent(withParent(withId(R.id.fragment_explore))),
                         isDisplayed()));
-        textView3.check(matches(withText(title)));
+        textView4.check(matches(withText(title)));
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.ibResetFilms),
