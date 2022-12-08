@@ -39,15 +39,15 @@ import es.unex.prototipoasee.R;
 @RunWith(AndroidJUnit4.class)
 public class CU01_AddUserTest {
 
-    public final String user = "Usuario";
-    public final String password = "Usuario1";
-
     @Rule
     public ActivityScenarioRule<LoginActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(LoginActivity.class);
 
     @Test
     public void cU01_AddUserTest() {
+        String user = "Usuario";
+        String password = "Usuario1";
+
         ViewInteraction textView = onView(
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
