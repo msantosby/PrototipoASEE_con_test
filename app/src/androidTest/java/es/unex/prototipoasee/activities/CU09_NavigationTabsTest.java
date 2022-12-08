@@ -97,7 +97,7 @@ public class CU09_NavigationTabsTest {
     @Test
     public void navigationTabsTest() {
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Sing up"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -142,7 +142,7 @@ public class CU09_NavigationTabsTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Sing up"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -161,19 +161,19 @@ public class CU09_NavigationTabsTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Detail")));
+        textView2.check(matches(withText(R.string.detail_title)));
 
         ViewInteraction textView3 = onView(
-                allOf(withParent(allOf(withContentDescription("Info"),
+                allOf(withParent(allOf(withContentDescription(R.string.detail_info),
                                 withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
                         isDisplayed()));
-        textView3.check(matches(withText("INFO")));
+        textView3.check(matches(withText(R.string.detail_info)));
 
         ViewInteraction textView4 = onView(
-                allOf(withParent(allOf(withContentDescription("Social"),
+                allOf(withParent(allOf(withContentDescription(R.string.detail_social),
                                 withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
                         isDisplayed()));
-        textView4.check(matches(withText("SOCIAL")));
+        textView4.check(matches(withText(R.string.detail_social)));
 
         ViewInteraction viewPager = onView(
                 allOf(withId(R.id.vpDetail),
@@ -182,7 +182,7 @@ public class CU09_NavigationTabsTest {
         viewPager.check(matches(isDisplayed()));
 
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Social"),
+                allOf(withContentDescription(R.string.detail_social),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tlDetail),
@@ -198,7 +198,7 @@ public class CU09_NavigationTabsTest {
         viewGroup.check(matches(isDisplayed()));
 
         ViewInteraction tabView2 = onView(
-                allOf(withContentDescription("Info"),
+                allOf(withContentDescription(R.string.detail_info),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tlDetail),
@@ -208,9 +208,19 @@ public class CU09_NavigationTabsTest {
         tabView2.perform(click());
 
         viewPager.check(matches(isDisplayed()));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         viewPager.perform(swipeLeft());
 
         viewGroup.check(matches(isDisplayed()));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         viewGroup.perform(swipeRight());
 
         viewPager.check(matches(isDisplayed()));
@@ -218,7 +228,7 @@ public class CU09_NavigationTabsTest {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Profile"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -228,7 +238,7 @@ public class CU09_NavigationTabsTest {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Delete account"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -237,7 +247,7 @@ public class CU09_NavigationTabsTest {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Delete permanently"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

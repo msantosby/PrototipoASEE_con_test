@@ -98,7 +98,7 @@ public class CU03_AddCommnetTest extends Application {
         String user = "Usuario";
         String comment = "Muy rico";
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -143,13 +143,19 @@ public class CU03_AddCommnetTest extends Application {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 7)));
         materialButton.perform(scrollTo(), click());
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.fragment_explore),
@@ -159,7 +165,7 @@ public class CU03_AddCommnetTest extends Application {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Social"),
+                allOf(withContentDescription(R.string.detail_social),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tlDetail),
@@ -169,7 +175,7 @@ public class CU03_AddCommnetTest extends Application {
         tabView.perform(click());
 
         ViewInteraction imageButton = onView(
-                allOf(withId(R.id.ibSendComment), withContentDescription("Escribe tu comentario aquí"),
+                allOf(withId(R.id.ibSendComment), withContentDescription(R.string.detail_comment),
                         withParent(allOf(withId(R.id.constraintLayout),
                                 withParent(withId(R.id.detail_social)))),
                         isDisplayed()));
@@ -194,7 +200,7 @@ public class CU03_AddCommnetTest extends Application {
         editText2.check(matches(withText(comment)));
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.ibSendComment), withContentDescription("Escribe tu comentario aquí"),
+                allOf(withId(R.id.ibSendComment), withContentDescription(R.string.detail_comment),
                         childAtPosition(
                                 allOf(withId(R.id.constraintLayout),
                                         childAtPosition(
@@ -250,7 +256,7 @@ public class CU03_AddCommnetTest extends Application {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -260,7 +266,7 @@ public class CU03_AddCommnetTest extends Application {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -269,7 +275,7 @@ public class CU03_AddCommnetTest extends Application {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

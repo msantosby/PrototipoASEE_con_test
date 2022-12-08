@@ -100,7 +100,7 @@ public class CU12_DeleteCommentTest {
         String comment = "Muy rico";
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -145,7 +145,7 @@ public class CU12_DeleteCommentTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -161,7 +161,7 @@ public class CU12_DeleteCommentTest {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Social"),
+                allOf(withContentDescription(R.string.detail_social),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tlDetail),
@@ -182,7 +182,7 @@ public class CU12_DeleteCommentTest {
         appCompatEditText5.perform(replaceText(comment), closeSoftKeyboard());
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.ibSendComment), withContentDescription("Escribe tu comentario aquí"),
+                allOf(withId(R.id.ibSendComment), withContentDescription(R.string.detail_comment),
                         childAtPosition(
                                 allOf(withId(R.id.constraintLayout),
                                         childAtPosition(
@@ -205,13 +205,13 @@ public class CU12_DeleteCommentTest {
         textView2.check(matches(withText(comment)));
 
         ViewInteraction imageButton = onView(
-                allOf(withId(R.id.ibCommentDelete), withContentDescription("Eliminar comentario"),
+                allOf(withId(R.id.ibCommentDelete), withContentDescription(R.string.comment_delete),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(androidx.cardview.widget.CardView.class))),
                         isDisplayed()));
         imageButton.check(matches(isDisplayed()));
 
         ViewInteraction appCompatImageButton2 = onView(
-                allOf(withId(R.id.ibCommentDelete), withContentDescription("Eliminar comentario"),
+                allOf(withId(R.id.ibCommentDelete), withContentDescription(R.string.comment_delete),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("com.google.android.material.card.MaterialCardView")),
@@ -234,7 +234,7 @@ public class CU12_DeleteCommentTest {
         recyclerView2.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction tabView2 = onView(
-                allOf(withContentDescription("Social"),
+                allOf(withContentDescription(R.string.detail_social),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tlDetail),
@@ -250,7 +250,7 @@ public class CU12_DeleteCommentTest {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -260,7 +260,7 @@ public class CU12_DeleteCommentTest {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -269,7 +269,7 @@ public class CU12_DeleteCommentTest {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

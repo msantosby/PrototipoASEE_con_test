@@ -97,7 +97,7 @@ public class CU14_AddPendingsTest {
         String title = films.getTitle();
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -142,7 +142,7 @@ public class CU14_AddPendingsTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -167,7 +167,7 @@ public class CU14_AddPendingsTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Detalle")));
+        textView2.check(matches(withText(R.string.detail_title)));
 
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.tvMovieTitleDetail),
@@ -176,14 +176,14 @@ public class CU14_AddPendingsTest {
         textView3.check(matches(withText(title)));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bTogglePendingDetail), withText("AÑADIR A PENDIENTES"),
+                allOf(withId(R.id.bTogglePendingDetail), withText(R.string.detail_add_pendant),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bTogglePendingDetail), withText("Añadir a Pendientes"),
+                allOf(withId(R.id.bTogglePendingDetail), withText(R.string.detail_add_pendant),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout2),
                                         childAtPosition(
@@ -196,7 +196,7 @@ public class CU14_AddPendingsTest {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_pendings), withContentDescription("Pendientes"),
+                allOf(withId(R.id.navigation_pendings), withContentDescription(R.string.title_pendings),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -209,7 +209,7 @@ public class CU14_AddPendingsTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView4.check(matches(withText("Pendientes")));
+        textView4.check(matches(withText(R.string.title_pendings)));
 
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.tvMovieTitle), withText(title),
@@ -217,7 +217,7 @@ public class CU14_AddPendingsTest {
                         isDisplayed()));
         textView5.check(matches(withText(title)));
         ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -227,7 +227,7 @@ public class CU14_AddPendingsTest {
         bottomNavigationItemView2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -236,7 +236,7 @@ public class CU14_AddPendingsTest {
         materialButton3.perform(scrollTo(), click());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

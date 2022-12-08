@@ -2,7 +2,6 @@ package es.unex.prototipoasee.activities;
 
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
@@ -76,9 +75,10 @@ public class CU11_SearchingTest {
                 for(Integer genre: genresids){
                     db.filmsGenresListDAO().insertFilmGenre(films.getId(), genre);
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();}
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -100,8 +100,14 @@ public class CU11_SearchingTest {
     public void cU11_SearchingTest() {
         String title = films.getTitle();
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -146,7 +152,7 @@ public class CU11_SearchingTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -158,7 +164,7 @@ public class CU11_SearchingTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView.check(matches(withText("Explorar")));
+        textView.check(matches(withText(R.string.title_explore)));
 
         ViewInteraction searchView = onView(
                 allOf(withId(R.id.svSearchFilm),
@@ -213,16 +219,7 @@ public class CU11_SearchingTest {
                         isDisplayed()));
         textView2.check(matches(withText(title)));
 
-        ViewInteraction appCompatImageView = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageView")), withContentDescription("Borrar consulta"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.LinearLayout")),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                1)),
-                                1),
-                        isDisplayed()));
-        appCompatImageView.perform(click());
+        imageButton.perform(click());
 
         ViewInteraction chip = onView(
                 allOf(withText("Acción"),
@@ -251,7 +248,7 @@ public class CU11_SearchingTest {
         appCompatImageButton.perform(click(), closeSoftKeyboard());
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -261,7 +258,7 @@ public class CU11_SearchingTest {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -270,7 +267,7 @@ public class CU11_SearchingTest {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

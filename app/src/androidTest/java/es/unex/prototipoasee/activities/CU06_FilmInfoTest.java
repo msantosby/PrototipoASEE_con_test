@@ -102,7 +102,7 @@ public class CU06_FilmInfoTest extends Application {
         String overview = films.getOverview();
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -147,7 +147,7 @@ public class CU06_FilmInfoTest extends Application {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -169,18 +169,16 @@ public class CU06_FilmInfoTest extends Application {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction textView2 = onView(
-                allOf(withText("Detalle"),
-                        withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Detalle")));
+        textView2.check(matches(withText(R.string.detail_title)));
 
         ViewInteraction textView3 = onView(
-                allOf(withText("INFO"),
-                        withParent(allOf(withContentDescription("Info"),
+                allOf(withParent(allOf(withContentDescription("Info"),
                                 withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
                         isDisplayed()));
-        textView3.check(matches(withText("INFO")));
+        textView3.check(matches(withText(R.string.detail_info)));
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.tvMovieTitleDetail), withText(title),
@@ -192,7 +190,7 @@ public class CU06_FilmInfoTest extends Application {
                 allOf(withId(R.id.tvReleaseDateDetail),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView5.check(matches(withText("Fecha de estreno")));
+        textView5.check(matches(withText(R.string.movie_date)));
 
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.tvReleaseDateValueDetail),
@@ -204,7 +202,7 @@ public class CU06_FilmInfoTest extends Application {
                 allOf(withId(R.id.tvRatingGeneralDetail),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView7.check(matches(withText("Valoración TMDB")));
+        textView7.check(matches(withText(R.string.movie_rating_IMDB)));
 
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.tvRatingAPIDetail),
@@ -216,7 +214,7 @@ public class CU06_FilmInfoTest extends Application {
                 allOf(withId(R.id.tvRatingDetail),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView9.check(matches(withText("Valoración MC")));
+        textView9.check(matches(withText(R.string.movie_rating_MovieCheck)));
 
         ViewInteraction textView10 = onView(
                 allOf(withId(R.id.tvRatingValueDetail),
@@ -228,13 +226,13 @@ public class CU06_FilmInfoTest extends Application {
                 allOf(withId(R.id.tvMovieGenresDetail),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView11.check(matches(withText("Géneros")));
+        textView11.check(matches(withText(R.string.movie_genres)));
 
         ViewInteraction textView13 = onView(
                 allOf(withId(R.id.tvSynopsisDetail),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView13.check(matches(withText("Sinopsis")));
+        textView13.check(matches(withText(R.string.movie_synopsis)));
 
         ViewInteraction textView14 = onView(
                 allOf(withId(R.id.tvSynopsisValueDetail),
@@ -243,14 +241,14 @@ public class CU06_FilmInfoTest extends Application {
         textView14.check(matches(withText(overview)));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("AÑADIR A FAVORITOS"),
+                allOf(withId(R.id.bToggleFavoriteDetail), withText(R.string.detail_add_favorites),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
         ViewInteraction button2 = onView(
-                allOf(withId(R.id.bTogglePendingDetail), withText("AÑADIR A PENDIENTES"),
+                allOf(withId(R.id.bTogglePendingDetail), withText(R.string.detail_add_pendant),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
@@ -259,7 +257,7 @@ public class CU06_FilmInfoTest extends Application {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -269,7 +267,7 @@ public class CU06_FilmInfoTest extends Application {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -278,7 +276,7 @@ public class CU06_FilmInfoTest extends Application {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

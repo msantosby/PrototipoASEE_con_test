@@ -98,7 +98,7 @@ public class CU07_DeleteFavoritesTest {
         String title = films.getTitle();
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -143,7 +143,7 @@ public class CU07_DeleteFavoritesTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -191,7 +191,7 @@ public class CU07_DeleteFavoritesTest {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                allOf(withId(R.id.navigation_favorites), withContentDescription(R.string.title_favorites),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -204,7 +204,7 @@ public class CU07_DeleteFavoritesTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView3.check(matches(withText("Favoritos")));
+        textView3.check(matches(withText(R.string.title_favorites)));
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.tvMovieTitle),
@@ -213,7 +213,7 @@ public class CU07_DeleteFavoritesTest {
         textView4.check(matches(withText(title)));
 
         ViewInteraction imageButton = onView(
-                allOf(withId(R.id.ibAction), withContentDescription("Alternar favorito"),
+                allOf(withId(R.id.ibAction), withContentDescription(R.string.movie_fav_button),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
         imageButton.check(matches(isDisplayed()));
@@ -225,7 +225,7 @@ public class CU07_DeleteFavoritesTest {
         cardView.check(matches(isDisplayed()));
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.ibAction), withContentDescription("Alternar favorito"),
+                allOf(withId(R.id.ibAction), withContentDescription(R.string.movie_fav_button),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
@@ -235,18 +235,17 @@ public class CU07_DeleteFavoritesTest {
         appCompatImageButton.perform(click());
 
         ViewInteraction textView5 = onView(
-                allOf(withText("Favoritos"),
-                        withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView5.check(matches(withText("Favoritos")));
+        textView5.check(matches(withText(R.string.title_favorites)));
 
         textView4.check(doesNotExist());
         imageButton.check(doesNotExist());
         cardView.check(doesNotExist());
 
         ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -256,7 +255,7 @@ public class CU07_DeleteFavoritesTest {
         bottomNavigationItemView2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -265,7 +264,7 @@ public class CU07_DeleteFavoritesTest {
         materialButton3.perform(scrollTo(), click());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

@@ -99,7 +99,7 @@ public class CU02_AddFavoritesTest extends Application {
         String title = films.getTitle();
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -144,7 +144,7 @@ public class CU02_AddFavoritesTest extends Application {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -172,14 +172,14 @@ public class CU02_AddFavoritesTest extends Application {
         textView2.check(matches(withText(title)));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("AÑADIR A FAVORITOS"),
+                allOf(withId(R.id.bToggleFavoriteDetail), withText(R.string.detail_add_favorites),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("Añadir a Favoritos"),
+                allOf(withId(R.id.bToggleFavoriteDetail), withText(R.string.detail_add_favorites),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout2),
                                         childAtPosition(
@@ -192,7 +192,7 @@ public class CU02_AddFavoritesTest extends Application {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                allOf(withId(R.id.navigation_favorites), withContentDescription(R.string.title_favorites),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -208,7 +208,7 @@ public class CU02_AddFavoritesTest extends Application {
         textView3.check(matches(withText(title)));
 
         ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -218,7 +218,7 @@ public class CU02_AddFavoritesTest extends Application {
         bottomNavigationItemView2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -227,7 +227,7 @@ public class CU02_AddFavoritesTest extends Application {
         materialButton3.perform(scrollTo(), click());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

@@ -95,7 +95,7 @@ public class CU13_AddRatingTest {
     @Test
     public void cU13_AddRatingTest() {
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -140,7 +140,7 @@ public class CU13_AddRatingTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -156,7 +156,7 @@ public class CU13_AddRatingTest {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Social"),
+                allOf(withContentDescription(R.string.detail_social),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tlDetail),
@@ -172,13 +172,13 @@ public class CU13_AddRatingTest {
         textView.check(matches(withText("----")));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bAddRating), withText("AÑADIR VALORACIÓN"),
+                allOf(withId(R.id.bAddRating), withText(R.string.detail_add_rating),
                         withParent(withParent(withId(R.id.linearLayout))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bAddRating), withText("Añadir valoración"),
+                allOf(withId(R.id.bAddRating), withText(R.string.detail_add_rating),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.linearLayout),
@@ -211,7 +211,7 @@ public class CU13_AddRatingTest {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -221,7 +221,7 @@ public class CU13_AddRatingTest {
         bottomNavigationItemView.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -230,7 +230,7 @@ public class CU13_AddRatingTest {
         materialButton3.perform(scrollTo(), click());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

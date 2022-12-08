@@ -49,7 +49,7 @@ public class CU10_AppInfoTest {
     @Test
     public void cU10_AppInfoTest() {
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Sing up"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -94,7 +94,7 @@ public class CU10_AppInfoTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Sing up"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -103,7 +103,7 @@ public class CU10_AppInfoTest {
         materialButton.perform(scrollTo(), click());
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Profile"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -116,16 +116,16 @@ public class CU10_AppInfoTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView.check(matches(withText("Profile")));
+        textView.check(matches(withText(R.string.title_profile)));
 
         ViewInteraction imageButton = onView(
-                allOf(withId(R.id.ibAppInfo), withContentDescription("MovieCheck Info"),
+                allOf(withId(R.id.ibAppInfo), withContentDescription(R.string.app_info),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         imageButton.check(matches(isDisplayed()));
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.ibAppInfo), withContentDescription("MovieCheck Info"),
+                allOf(withId(R.id.ibAppInfo), withContentDescription(R.string.app_info),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -137,10 +137,10 @@ public class CU10_AppInfoTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView2.check(matches(withText("MovieCheck Info")));
+        textView2.check(matches(withText(R.string.app_info)));
 
         ViewInteraction imageView = onView(
-                allOf(withId(R.id.ivAppIconProfile), withContentDescription("Default profile picture"),
+                allOf(withId(R.id.ivAppIconProfile), withContentDescription(R.string.description_default_profile_picture),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         imageView.check(matches(isDisplayed()));
@@ -149,52 +149,46 @@ public class CU10_AppInfoTest {
                 allOf(withId(R.id.tvWhatIs),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView3.check(matches(withText("What is MovieCheck?")));
+        textView3.check(matches(withText(R.string.app_info_what_is)));
         textView3.perform(swipeUp());
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.tvWhatIsResponse),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView4.check(matches(withText("MovieCheck is simply an app designed to manage the audiovisual preferences of the user.")));
+        textView4.check(matches(withText(R.string.app_info_what_is_response)));
         textView4.perform(swipeUp());
 
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.tvWhatCanDo),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView5.check(matches(withText("What can you do with it?")));
+        textView5.check(matches(withText(R.string.app_info_what_can_do)));
         textView5.perform(swipeUp());
 
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.tvWhatCanDoResponse),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView6.check(matches(withText("With MovieCheck you will be able to check information on the most popular movies of the moment. In addition, you can mark those that you like the most as favorites and even list them as pending so you don't miss out on the most interesting titles. Not only that, but the members of the MovieCheck community will also be able to interact with each other and exchange their opinions through the social section that can be found in the details of each movie. There you can give your own assessment of the film in question and post any comments about it.")));
+        textView6.check(matches(withText(R.string.app_info_what_can_do_response)));
         textView6.perform(swipeUp());
 
         ViewInteraction textView7 = onView(
                 allOf(withId(R.id.tvWho),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView7.check(matches(withText("Who has made it?")));
+        textView7.check(matches(withText(R.string.app_info_who)));
 
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.tvWhoResponse),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
-        textView8.check(matches(withText("MovieCheck has been developed by the following four students of the Degree in Computer Engineering in Software Engineering taught by the University of Extremadura through the Technology School of Cáceres.")));
-
-//        ViewInteraction textView9 = onView(
-//                allOf(withId(R.id.tvAuthorsList),
-//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
-//                        isDisplayed()));
-//        textView9.check(matches(withText(" Francisco Javier Mesa Martín  David Salguero Carrasco  Marcos Santos Muñoz  Manuel Rodríguez Rodríguez ")));
+        textView8.check(matches(withText(R.string.app_info_who_response)));
 
         pressBack();
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Delete account"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -203,7 +197,7 @@ public class CU10_AppInfoTest {
         materialButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bDelete), withText("Delete permanently"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),

@@ -97,7 +97,7 @@ public class CU16_FavoritePendigsScreenTest {
         String title = films.getTitle();
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.tvRegisterLogin), withText("Registrarse"),
+                allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -142,7 +142,7 @@ public class CU16_FavoritePendigsScreenTest {
         appCompatEditText4.perform(scrollTo(), replaceText("Usuario1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.bRegister), withText("Registrarse"),
+                allOf(withId(R.id.bRegister), withText(R.string.register),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -151,13 +151,13 @@ public class CU16_FavoritePendigsScreenTest {
         materialButton.perform(scrollTo(), click());
 
         ViewInteraction frameLayout = onView(
-                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                allOf(withId(R.id.navigation_favorites), withContentDescription(R.string.title_favorites),
                         withParent(withParent(withId(R.id.nav_view))),
                         isDisplayed()));
         frameLayout.check(matches(isDisplayed()));
 
         ViewInteraction frameLayout2 = onView(
-                allOf(withId(R.id.navigation_pendings), withContentDescription("Pendientes"),
+                allOf(withId(R.id.navigation_pendings), withContentDescription(R.string.title_pendings),
                         withParent(withParent(withId(R.id.nav_view))),
                         isDisplayed()));
         frameLayout2.check(matches(isDisplayed()));
@@ -179,7 +179,7 @@ public class CU16_FavoritePendigsScreenTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Detalle")));
+        textView2.check(matches(withText(R.string.detail_title)));
 
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.tvMovieTitleDetail),
@@ -188,21 +188,21 @@ public class CU16_FavoritePendigsScreenTest {
         textView3.check(matches(withText(title)));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("AÑADIR A FAVORITOS"),
+                allOf(withId(R.id.bToggleFavoriteDetail), withText(R.string.detail_add_favorites),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
         ViewInteraction button2 = onView(
-                allOf(withId(R.id.bTogglePendingDetail), withText("AÑADIR A PENDIENTES"),
+                allOf(withId(R.id.bTogglePendingDetail), withText(R.string.detail_add_pendant),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("Añadir a Favoritos"),
+                allOf(withId(R.id.bToggleFavoriteDetail), withText(R.string.detail_add_favorites),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout2),
                                         childAtPosition(
@@ -213,7 +213,7 @@ public class CU16_FavoritePendigsScreenTest {
         materialButton2.perform(click());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.bTogglePendingDetail), withText("Añadir a Pendientes"),
+                allOf(withId(R.id.bTogglePendingDetail), withText(R.string.detail_add_pendant),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout2),
                                         childAtPosition(
@@ -226,7 +226,7 @@ public class CU16_FavoritePendigsScreenTest {
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                allOf(withId(R.id.navigation_favorites), withContentDescription(R.string.title_favorites),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -239,7 +239,7 @@ public class CU16_FavoritePendigsScreenTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView5.check(matches(withText("Favoritos")));
+        textView5.check(matches(withText(R.string.title_favorites)));
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.tvMovieTitle),
@@ -248,13 +248,13 @@ public class CU16_FavoritePendigsScreenTest {
         textView4.check(matches(withText(title)));
 
         ViewInteraction imageButton = onView(
-                allOf(withId(R.id.ibAction), withContentDescription("Alternar favorito"),
+                allOf(withId(R.id.ibAction), withContentDescription(R.string.movie_fav_button),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
         imageButton.check(matches(isDisplayed()));
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.ibAction), withContentDescription("Alternar favorito"),
+                allOf(withId(R.id.ibAction), withContentDescription(R.string.movie_fav_button),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
@@ -267,10 +267,10 @@ public class CU16_FavoritePendigsScreenTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView6.check(matches(withText("Favoritos")));
+        textView6.check(matches(withText(R.string.title_favorites)));
 
         ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.navigation_pendings), withContentDescription("Pendientes"),
+                allOf(withId(R.id.navigation_pendings), withContentDescription(R.string.title_pendings),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -283,7 +283,7 @@ public class CU16_FavoritePendigsScreenTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView7.check(matches(withText("Pendientes")));
+        textView7.check(matches(withText(R.string.title_pendings)));
 
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.tvMovieTitle),
@@ -292,13 +292,13 @@ public class CU16_FavoritePendigsScreenTest {
         textView8.check(matches(withText(title)));
 
         ViewInteraction imageButton2 = onView(
-                allOf(withId(R.id.ibAction), withContentDescription("Alternar pendiente"),
+                allOf(withId(R.id.ibAction), withContentDescription(R.string.movie_pending_button),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
         imageButton2.check(matches(isDisplayed()));
 
         ViewInteraction appCompatImageButton2 = onView(
-                allOf(withId(R.id.ibAction), withContentDescription("Alternar pendiente"),
+                allOf(withId(R.id.ibAction), withContentDescription(R.string.movie_pending_button),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
@@ -311,10 +311,10 @@ public class CU16_FavoritePendigsScreenTest {
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView9.check(matches(withText("Pendientes")));
+        textView9.check(matches(withText(R.string.title_pendings)));
 
         ViewInteraction bottomNavigationItemView3 = onView(
-                allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
+                allOf(withId(R.id.navigation_profile), withContentDescription(R.string.title_profile),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
@@ -324,7 +324,7 @@ public class CU16_FavoritePendigsScreenTest {
         bottomNavigationItemView3.perform(click());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
+                allOf(withId(R.id.bDeleteAccount), withText(R.string.profile_delete_account),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -333,7 +333,7 @@ public class CU16_FavoritePendigsScreenTest {
         materialButton4.perform(scrollTo(), click());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
+                allOf(withId(R.id.bDelete), withText(R.string.profile_delete_permanently),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
