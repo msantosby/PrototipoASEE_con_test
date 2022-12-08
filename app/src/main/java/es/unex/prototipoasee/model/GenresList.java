@@ -18,4 +18,12 @@ public class GenresList {
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
+
+    public GenresList(){}
+
+    public GenresList(List<Genre> list){
+        genres = list;
+    }
+
+
 }
