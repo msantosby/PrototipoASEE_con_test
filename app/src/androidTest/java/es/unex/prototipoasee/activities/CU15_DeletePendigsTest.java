@@ -50,7 +50,7 @@ import es.unex.prototipoasee.support.AppExecutors;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CU14_AddPendigsTest {
+public class CU15_DeletePendigsTest {
 
     public Films films;
     public Context c = ApplicationProvider.getApplicationContext();

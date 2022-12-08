@@ -1,35 +1,33 @@
 package es.unex.prototipoasee.activities;
 
 
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.filters.LargeTest;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
-import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
-import static androidx.test.espresso.Espresso.onData;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
-import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.action.ViewActions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-
-import es.unex.prototipoasee.R;
-import es.unex.prototipoasee.model.Films;
-import es.unex.prototipoasee.model.GenresList;
-import es.unex.prototipoasee.room.FilmsDatabase;
-import es.unex.prototipoasee.support.AppExecutors;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -40,18 +38,18 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runner.manipulation.Ordering;
-
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.unex.prototipoasee.R;
+import es.unex.prototipoasee.model.Films;
+import es.unex.prototipoasee.room.FilmsDatabase;
+import es.unex.prototipoasee.support.AppExecutors;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CU02_AddFavoritesTest extends Application {
+public class CU14_AddPendingsTest {
 
     public Films films;
     public Context c = ApplicationProvider.getApplicationContext();
@@ -94,8 +92,9 @@ public class CU02_AddFavoritesTest extends Application {
         });
     }
 
+
     @Test
-    public void cU02_AddFavoritesTest() {
+    public void cU14_AddPendingsTest() {
         String title = films.getTitle();
 
         ViewInteraction materialTextView = onView(
@@ -166,47 +165,58 @@ public class CU02_AddFavoritesTest extends Application {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction textView2 = onView(
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                                withParent(withId(androidx.preference.R.id.action_bar_container)))),
+                        isDisplayed()));
+        textView2.check(matches(withText("Detalle")));
+
+        ViewInteraction textView3 = onView(
                 allOf(withId(R.id.tvMovieTitleDetail),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView2.check(matches(withText(title)));
+        textView3.check(matches(withText(title)));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("AÑADIR A FAVORITOS"),
+                allOf(withId(R.id.bTogglePendingDetail), withText("AÑADIR A PENDIENTES"),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.bToggleFavoriteDetail), withText("Añadir a Favoritos"),
+                allOf(withId(R.id.bTogglePendingDetail), withText("Añadir a Pendientes"),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout2),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 13)),
-                                0),
+                                1),
                         isDisplayed()));
         materialButton2.perform(click());
 
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                allOf(withId(R.id.navigation_pendings), withContentDescription("Pendientes"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),
                                         0),
-                                1),
+                                2),
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.tvMovieTitle),
+        ViewInteraction textView4 = onView(
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                                withParent(withId(androidx.preference.R.id.action_bar_container)))),
+                        isDisplayed()));
+        textView4.check(matches(withText("Pendientes")));
+
+        ViewInteraction textView5 = onView(
+                allOf(withId(R.id.tvMovieTitle), withText(title),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
-        textView3.check(matches(withText(title)));
-
+        textView5.check(matches(withText(title)));
         ViewInteraction bottomNavigationItemView2 = onView(
                 allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
                         childAtPosition(
@@ -234,7 +244,6 @@ public class CU02_AddFavoritesTest extends Application {
                                         0),
                                 4)));
         materialButton4.perform(scrollTo(), click());
-
     }
 
     private static Matcher<View> childAtPosition(
