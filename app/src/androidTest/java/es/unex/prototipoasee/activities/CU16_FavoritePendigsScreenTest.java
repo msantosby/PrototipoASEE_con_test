@@ -49,7 +49,7 @@ import es.unex.prototipoasee.support.AppExecutors;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CU14_AddPendingsTest {
+public class CU16_FavoritePendigsScreenTest {
 
     public Films films;
     public Context c = ApplicationProvider.getApplicationContext();
@@ -93,7 +93,7 @@ public class CU14_AddPendingsTest {
     }
 
     @Test
-    public void cU14_AddPendingsTest() {
+    public void c16_FavoritePendigsScreenTest() {
         String title = films.getTitle();
 
         ViewInteraction materialTextView = onView(
@@ -150,6 +150,18 @@ public class CU14_AddPendingsTest {
                                 7)));
         materialButton.perform(scrollTo(), click());
 
+        ViewInteraction frameLayout = onView(
+                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                        withParent(withParent(withId(R.id.nav_view))),
+                        isDisplayed()));
+        frameLayout.check(matches(isDisplayed()));
+
+        ViewInteraction frameLayout2 = onView(
+                allOf(withId(R.id.navigation_pendings), withContentDescription("Pendientes"),
+                        withParent(withParent(withId(R.id.nav_view))),
+                        isDisplayed()));
+        frameLayout2.check(matches(isDisplayed()));
+
         ViewInteraction textView = onView(
                 allOf(withId(R.id.tvMovieTitle), withText(title),
                         withParent(withParent(withId(R.id.fragment_explore))),
@@ -176,13 +188,31 @@ public class CU14_AddPendingsTest {
         textView3.check(matches(withText(title)));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.bTogglePendingDetail), withText("AÑADIR A PENDIENTES"),
+                allOf(withId(R.id.bToggleFavoriteDetail), withText("AÑADIR A FAVORITOS"),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
+        ViewInteraction button2 = onView(
+                allOf(withId(R.id.bTogglePendingDetail), withText("AÑADIR A PENDIENTES"),
+                        withParent(allOf(withId(R.id.linearLayout2),
+                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                        isDisplayed()));
+        button2.check(matches(isDisplayed()));
+
         ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.bToggleFavoriteDetail), withText("Añadir a Favoritos"),
+                        childAtPosition(
+                                allOf(withId(R.id.linearLayout2),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                13)),
+                                0),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.bTogglePendingDetail), withText("Añadir a Pendientes"),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout2),
@@ -191,11 +221,55 @@ public class CU14_AddPendingsTest {
                                                 13)),
                                 1),
                         isDisplayed()));
-        materialButton2.perform(click());
+        materialButton3.perform(click());
 
         pressBack();
 
         ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.navigation_favorites), withContentDescription("Favoritos"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_view),
+                                        0),
+                                1),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        ViewInteraction textView5 = onView(
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                                withParent(withId(androidx.preference.R.id.action_bar_container)))),
+                        isDisplayed()));
+        textView5.check(matches(withText("Favoritos")));
+
+        ViewInteraction textView4 = onView(
+                allOf(withId(R.id.tvMovieTitle),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                        isDisplayed()));
+        textView4.check(matches(withText(title)));
+
+        ViewInteraction imageButton = onView(
+                allOf(withId(R.id.ibAction), withContentDescription("Alternar favorito"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                        isDisplayed()));
+        imageButton.check(matches(isDisplayed()));
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.ibAction), withContentDescription("Alternar favorito"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction textView6 = onView(
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                                withParent(withId(androidx.preference.R.id.action_bar_container)))),
+                        isDisplayed()));
+        textView6.check(matches(withText("Favoritos")));
+
+        ViewInteraction bottomNavigationItemView2 = onView(
                 allOf(withId(R.id.navigation_pendings), withContentDescription("Pendientes"),
                         childAtPosition(
                                 childAtPosition(
@@ -203,20 +277,43 @@ public class CU14_AddPendingsTest {
                                         0),
                                 2),
                         isDisplayed()));
-        bottomNavigationItemView.perform(click());
+        bottomNavigationItemView2.perform(click());
 
-        ViewInteraction textView4 = onView(
+        ViewInteraction textView7 = onView(
                 allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
                                 withParent(withId(androidx.preference.R.id.action_bar_container)))),
                         isDisplayed()));
-        textView4.check(matches(withText("Pendientes")));
+        textView7.check(matches(withText("Pendientes")));
 
-        ViewInteraction textView5 = onView(
-                allOf(withId(R.id.tvMovieTitle), withText(title),
+        ViewInteraction textView8 = onView(
+                allOf(withId(R.id.tvMovieTitle),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
-        textView5.check(matches(withText(title)));
-        ViewInteraction bottomNavigationItemView2 = onView(
+        textView8.check(matches(withText(title)));
+
+        ViewInteraction imageButton2 = onView(
+                allOf(withId(R.id.ibAction), withContentDescription("Alternar pendiente"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                        isDisplayed()));
+        imageButton2.check(matches(isDisplayed()));
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withId(R.id.ibAction), withContentDescription("Alternar pendiente"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        ViewInteraction textView9 = onView(
+                allOf(withParent(allOf(withId(androidx.preference.R.id.action_bar),
+                                withParent(withId(androidx.preference.R.id.action_bar_container)))),
+                        isDisplayed()));
+        textView9.check(matches(withText("Pendientes")));
+
+        ViewInteraction bottomNavigationItemView3 = onView(
                 allOf(withId(R.id.navigation_profile), withContentDescription("Perfil"),
                         childAtPosition(
                                 childAtPosition(
@@ -224,25 +321,25 @@ public class CU14_AddPendingsTest {
                                         0),
                                 3),
                         isDisplayed()));
-        bottomNavigationItemView2.perform(click());
+        bottomNavigationItemView3.perform(click());
 
-        ViewInteraction materialButton3 = onView(
+        ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.bDeleteAccount), withText("Eliminar cuenta"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 8)));
-        materialButton3.perform(scrollTo(), click());
+        materialButton4.perform(scrollTo(), click());
 
-        ViewInteraction materialButton4 = onView(
+        ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.bDelete), withText("Eliminar definitivamente"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 4)));
-        materialButton4.perform(scrollTo(), click());
+        materialButton5.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(
