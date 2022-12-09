@@ -75,11 +75,6 @@ public class CU11_SearchingTest {
                 db.genreDAO().insertGenre(genre);
                 for(Integer genreId: genresids){
                     db.filmsGenresListDAO().insertFilmGenre(films.getId(), genreId);
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         });
@@ -102,12 +97,6 @@ public class CU11_SearchingTest {
     public void cU11_SearchingTest() {
         String title = films.getTitle();
         String name = genre.getName();
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.tvRegisterLogin), withText(R.string.register),
